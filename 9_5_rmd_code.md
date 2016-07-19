@@ -15,30 +15,30 @@ library(tseries)
 
 
 ```r
-spx_data<- get.hist.quote(instrument ="^gspc",quote = "Close")
+ADP_data<- get.hist.quote(instrument ="ADP",quote = "Close")
 ```
 
 * Create the log return with 1 period lag
 
 
 ```r
-spx_return<- log(lag(spx_data))- log(spx_data)
+ADP_return<- log(lag(ADP_data))- log(ADP_data)
 ```
 
-* Create the volatiltiy parameter ( 250 trading days)
+* Create the volatility parameter ( 250 trading days)
 
 
 ```r
-spx_volatility<- sd(spx_return)*sqrt(250)*100
+ADP_volatility<- sd(ADP_return)*sqrt(250)*100
 
-spx_volatility
+ADP_volatility
 ```
 
 ```
-## [1] 17.99872
+## [1] 34.49113
 ```
 
-* We can see that the SPX volaitlity is .18
+* We can see that the ADP volatility is 34.49
 
 * Now, we input a function for the volatility
 
@@ -62,9 +62,9 @@ sqrt(varlist)
 
 
 ```r
-volest<- vol(10,spx_return)
-volest2<- vol(30,spx_return)
-volest3<- vol(100, spx_return)
+volest<- vol(10,ADP_return)
+volest2<- vol(30,ADP_return)
+volest3<- vol(90, ADP_return)
 ```
 
 
@@ -72,9 +72,14 @@ volest3<- vol(100, spx_return)
 
 
 ```r
-plot(volest,type = "l")
+plot(volest,type = "l", col= "dark green")
 lines(volest2, type = "l", col = "red")
 lines(volest3, type = "l", col = "blue")
+
+legend( "topleft", lty = 1, col = c("dark green", "red","blue"), c("decay factor:10","decay factor: 30","decay factor:90")) 
 ```
 
 ![](9_5_rmd_code_files/figure-html/plots-1.png)<!-- -->
+
+* It looks like the lowest decay factor is the most peaked of them all.  The higher the decay, the more smoothed the model tends to look.
+
